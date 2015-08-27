@@ -31,7 +31,7 @@ import Control.Category
 data Var = A | B | C deriving Show
 data Tm = I | X' Var  | Tm :-: Tm deriving Show
 
--- Maps between two objects.
+-- | Maps between two objects.
 data Rule = IdRule | Dot Rule Rule | Cross Rule Rule | La | Rh | Asc deriving Show
 
 -- | Interpretation of rules and their composition.
@@ -47,7 +47,7 @@ evalRule Asc = \case
 
 -- Do we need to encode all the rules on page 4? Or are those just expected laws?
 
--- We define "normal forms" of object expression as Nf
+-- | We define "normal forms" of object expression as Nf
 data Nf = J | Var :.: Nf deriving Show
 
 -- | Normal forms embed into object expressions.
