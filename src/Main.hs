@@ -1,6 +1,7 @@
 module Main where
 import Control.Category.Monoidal.Skew
 
+s,t,u,v,w :: Tm
 s =  X' A
 t = X' A :-: I :-: X' B
 u = I :-: I :-: (X' A :-: I) :-: X' B
@@ -22,6 +23,6 @@ printTest a = do
         d = evalRule c a
     putStrLn $ "Original Object:  " ++ show a
     putStrLn $ "Normal Form    :  " ++ show b
-    putStrLn $ "Rewrite Rules  :  " ++ if length (show c) > 100 then (take 95 $ show c) ++ " ..." else show c
+    putStrLn $ "Rewrite Rules  :  " ++ if length (show c) > 100 then take 95 (show c) ++ " ..." else show c
     putStrLn $ "Rewriten Object:  " ++ show d
     putStrLn ""

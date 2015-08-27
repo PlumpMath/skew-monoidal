@@ -11,12 +11,11 @@ module Control.Category.Monoidal.Skew where
 import Prelude hiding (id,(.))
 import Control.Category
 import Control.Categorical.Bifunctor
-import Control.Category.Associative
 
 class Bifunctor p k k k => SkewMonoidal (k :: * -> * -> *) (p :: * -> * -> *) where
     type Id (k :: * -> * -> *) (p :: * -> * -> *) :: *
-    lam :: ((Id k p) `p` a) `k` a
-    rho :: a `k` (a `p` (Id k p))
+    lam :: (Id k p `p` a) `k` a
+    rho :: a `k` (a `p` Id k p)
     dis :: ((a `p` b) `p` c) `k` (a `p` (b `p` c))
 
 -- A Skew-monoidal category is a category `k` together with a
@@ -33,7 +32,7 @@ data Tm = I | X' Var  | Tm :-: Tm deriving Show
 data Rule = IdRule | Dot Rule Rule | Cross Rule Rule | La | Rh | Asc deriving Show
 evalRule :: Rule -> Tm -> Tm
 evalRule IdRule = id
-evalRule (Dot a b) = (evalRule a) . (evalRule b)
+evalRule (Dot a b) = evalRule a . evalRule b
 evalRule (Cross a b) = \(c :-: d) -> evalRule a c :-: evalRule b d
 evalRule La = \(I :-: a) -> a
 evalRule Rh = \a -> a :-: I
@@ -48,7 +47,7 @@ data Nf = J | Var :.: Nf deriving Show
 
 emb :: Nf -> Tm
 emb J = I
-emb (a :.: nf) = X' a :-: emb nf
+emb (a :.: n) = X' a :-: emb n
 
 -- ||-|| :: i'm calling it splay
 splay :: Tm -> Nf -> Nf
@@ -64,14 +63,14 @@ nf a = splay a J
 splat :: Tm -> Nf -> Rule
 splat (X' _) _ = IdRule
 splat I _ = La
-splat (a :-: b) n = (splat a $ (splay b n))
+splat (a :-: b) n = splat a (splay b n)
                     `Dot` (IdRule `Cross` splat b n `Dot` Asc)
 
 -- | "Normalizing" map expression.
 nm :: Tm -> Rule
-nm a = (splat a $ J) `Dot` Rh
+nm a = splat a J `Dot` Rh
 
-{-
+{-  Is this not needed? useful?
 
 -- Free Skew-monoidal Category includes embedding for
 -- normalization.
