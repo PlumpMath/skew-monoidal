@@ -10,7 +10,7 @@ Maintainer  :  Thomas Bereknyei <tomberek@gmail.com>
 Stability   :  unstable
 Portability :  GADTs,LambdaCase
 
-Implements normalization from: http://arxiv.org/pdf/1406.2064v1.pdf
+Implements normalization from: <http://arxiv.org/pdf/1406.2064v1.pdf>
 
 The following is almost directly pulled out from the paper.
 This served as a good exercise in translating category theory
