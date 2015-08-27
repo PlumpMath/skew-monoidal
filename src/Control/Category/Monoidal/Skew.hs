@@ -23,7 +23,7 @@ import Control.Category
 -- It is half of an Associative, Monoidal, Cartesian
 
 
--- | Objects of free symetric monoidal category Var, in this case: Hask
+-- | Objects of free symetric monoidal category with Objects from Var
 data Var = A | B | C deriving Show
 data Tm = I | X' Var  | Tm :-: Tm deriving Show
 
