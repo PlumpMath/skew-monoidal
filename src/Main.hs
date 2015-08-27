@@ -1,5 +1,6 @@
 module Main where
 import Control.Category.Monoidal.Skew
+import Morte.Core
 
 s,t,u,v,w :: Tm
 s =  X' A
