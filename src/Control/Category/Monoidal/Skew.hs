@@ -31,8 +31,10 @@ import Control.Category
 data Var = A | B | C deriving Show
 data Tm = I | X' Var  | Tm :-: Tm deriving Show
 
--- Maps between two objects
+-- Maps between two objects.
 data Rule = IdRule | Dot Rule Rule | Cross Rule Rule | La | Rh | Asc deriving Show
+
+-- | Interpretation of rules and their composition.
 evalRule :: Rule -> Tm -> Tm
 evalRule IdRule = id
 evalRule (Dot a b) = evalRule a . evalRule b
@@ -48,11 +50,12 @@ evalRule Asc = \case
 -- We define "normal forms" of object expression as Nf
 data Nf = J | Var :.: Nf deriving Show
 
+-- | Normal forms embed into object expressions.
 emb :: Nf -> Tm
 emb J = I
 emb (a :.: n) = X' a :-: emb n
 
--- ||-|| :: i'm calling it splay
+-- | Let ||-|| be a function ... i'm calling it splay
 splay :: Tm -> Nf -> Nf
 splay (X' x) n = x :.: n
 splay I n = n
@@ -62,7 +65,7 @@ splay (a :-: b) n = splay a (splay b n)
 nf :: Tm -> Nf
 nf a = splay a J
 
--- | In Lemma 3, <<->> :: i'm calling it splat
+-- | In Lemma 3, Let now <<->> ... i'm calling it splat
 splat :: Tm -> Nf -> Rule
 splat (X' _) _ = IdRule
 splat I _ = La
