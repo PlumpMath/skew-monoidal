@@ -65,7 +65,7 @@ splay (a :-: b) n = splay a (splay b n)
 nf :: Tm -> Nf
 nf a = splay a J
 
--- | In Lemma 3, Let now <<->> ... i'm calling it splat
+-- | In Lemma 3, Let now `<<->>` ... i'm calling it splat
 splat :: Tm -> Nf -> Rule
 splat (X' _) _ = IdRule
 splat I _ = La
