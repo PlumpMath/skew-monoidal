@@ -1,22 +1,22 @@
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE DataKinds #-}
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE TypeOperators #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE TypeFamilies #-}
+{- |
+Module      :  Control.Category.Monoidal.Skew
+Description :  skew-monoidal
+Copyright   :  (c) 2015 Thomas Bereknyei
+License     :  BSD3
+Maintainer  :  Thomas Bereknyei <tomberek@gmail.com>
+Stability   :  unstable
+Portability :  GADTs,LambdaCase
+
+Implements normalization from: http://arxiv.org/pdf/1406.2064v1.pdf
+-}
 module Control.Category.Monoidal.Skew where
 
 import Prelude hiding (id,(.))
 import Control.Category
 import Control.Categorical.Bifunctor
-
-class Bifunctor p k k k => SkewMonoidal (k :: * -> * -> *) (p :: * -> * -> *) where
-    type Id (k :: * -> * -> *) (p :: * -> * -> *) :: *
-    lam :: (Id k p `p` a) `k` a
-    rho :: a `k` (a `p` Id k p)
-    dis :: ((a `p` b) `p` c) `k` (a `p` (b `p` c))
 
 -- A Skew-monoidal category is a category `k` together with a
 -- distinguished object `Id`, a functor `bimap`, and three
@@ -70,7 +70,13 @@ splat (a :-: b) n = splat a (splay b n)
 nm :: Tm -> Rule
 nm a = splat a J `Dot` Rh
 
-{-  Is this not needed? useful?
+{-  Would this be useful? Can translate into our Tm as an intermediate, normalize, translate back?
+
+class Bifunctor p k k k => SkewMonoidal (k :: * -> * -> *) (p :: * -> * -> *) where
+    type Id (k :: * -> * -> *) (p :: * -> * -> *) :: *
+    lam :: (Id k p `p` a) `k` a
+    rho :: a `k` (a `p` Id k p)
+    dis :: ((a `p` b) `p` c) `k` (a `p` (b `p` c))
 
 -- Free Skew-monoidal Category includes embedding for
 -- normalization.
