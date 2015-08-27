@@ -11,6 +11,11 @@ Stability   :  unstable
 Portability :  GADTs,LambdaCase
 
 Implements normalization from: http://arxiv.org/pdf/1406.2064v1.pdf
+
+The following is almost directly pulled out from the paper.
+This served as a good exercise in translating category theory
+notation into Haskell code. I welcome any corrections or
+suggestions for improvement.
 -}
 module Control.Category.Monoidal.Skew where
 
@@ -21,7 +26,6 @@ import Control.Category
 -- distinguished object `Id`, a functor `bimap`, and three
 -- natural transformations, `lambda`, rho, and disassociate.
 -- It is half of an Associative, Monoidal, Cartesian
-
 
 -- | Objects of free symetric monoidal category with Objects from Var
 data Var = A | B | C deriving Show
