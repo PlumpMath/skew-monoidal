@@ -16,7 +16,6 @@ module Control.Category.Monoidal.Skew where
 
 import Prelude hiding (id,(.))
 import Control.Category
-import Control.Categorical.Bifunctor
 
 -- A Skew-monoidal category is a category `k` together with a
 -- distinguished object `Id`, a functor `bimap`, and three
@@ -71,6 +70,7 @@ nm :: Tm -> Rule
 nm a = splat a J `Dot` Rh
 
 {-  Would this be useful? Can translate into our Tm as an intermediate, normalize, translate back?
+import Control.Categorical.Bifunctor
 
 class Bifunctor p k k k => SkewMonoidal (k :: * -> * -> *) (p :: * -> * -> *) where
     type Id (k :: * -> * -> *) (p :: * -> * -> *) :: *
